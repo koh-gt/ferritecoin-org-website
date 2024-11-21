@@ -1,0 +1,992 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>{% block title %}Ferritecoin{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <link rel="icon" type="image/x-icon" href="../static/img/favicon.svg">
+
+        <link rel="stylesheet" href="../static/css/navbar_styles.css">
+        <script src="../static/js/navbar.js"></script>
+
+        {% block styles %}{% endblock %} 
+        {% block scripts %}{% endblock %} 
+        
+    </head>
+
+    <body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="/">
+                    <img src="../static/img/headerlogo.svg" alt="headerlogo" class="nav-header-logo"/>
+                </a>
+                
+                <!-- <img src="images/ferrite-core-64px.png" alt="ferrite-64px" /> -->
+                
+                <!-- <span class="text text--medium"></span> -->
+                </div>
+            <div class="mobile-menu-icon" id="mobile-menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="list list--inline" id="navbar-menu">
+
+                <li class="list__item text text--small text--regular dropdown">
+                    <!-- Start -->
+                    <a href="https://ferritecoin.org:53443/" class="nav-link">
+                        Start
+                    </a>
+                    <ul class="dropdown-content">
+                        <div class="dropdown-content-inner">
+                            <!-- Start - Introduction grey separator -->
+                            <li class="dropdown-separator">
+                                Introduction
+                            </li>
+                            <!-- Start - About Ferrite -->
+                            <li>
+                                <a href="/" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/information-svg.svg" alt="fec-info-icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">About Ferrite</span>
+                                    <span class="nav-subtext">Discover the essentials of Ferrite.</span>
+                                </div>
+                                </a>
+                            </li>
+
+                            <!-- Web Utilities -->
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/web-link.svg" alt="web-utility-icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Web Utilities > </span>
+                                    <span class="nav-subtext">Quick access to frequently used features.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+                                <li class="dropdown-separator">
+                                    FEXT-Web
+                                </li>
+                                <li>
+                                    <a href="/wallet" class="nav-link">
+                                    <div class="nav-details-container-item">
+                                        <img src="../static/img/nav/ferrite-wallet-svg.svg" alt="wallet-icon" class="nav-icon nav-details-container-image" />
+                                    </div>
+                                    <div class="nav-details-container-item">
+                                        <span class="nav-text">Web Wallet</span>
+                                        <span class="nav-subtext">Custodial wallet. Coins held online on our servers.</span>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/faucet" class="nav-link">
+                                    <div class="nav-details-container-item">
+                                        <img src="../static/img/nav/faucet-svg.svg" alt="faucet-icon" class="nav-icon nav-details-container-image" />
+                                    </div>
+                                    <div class="nav-details-container-item">
+                                        <span class="nav-text">Faucet</span>
+                                        <span class="nav-subtext">Claim free Ferritecoins to get you started.</span>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/fext" class="nav-link">
+                                    <div class="nav-details-container-item">
+                                        <img src="../static/img/nav/fext-png.png" alt="fext-chat-icon" class="nav-icon nav-details-container-image" />
+                                    </div>
+                                    <div class="nav-details-container-item">
+                                        <span class="nav-text">FEXT | Ferritext</span>
+                                        <span class="nav-subtext">A free and anonymous on-chain messenger.</span>
+                                    </div>
+                                    </a>
+                                </li>
+                                </ul>
+                            </li>
+
+                            <!-- Downloads -->
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/downloads-svg.svg" alt="downloads-icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Downloads > </span>
+                                    <span class="nav-subtext">Executables and source code.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+                                    <li class="dropdown-separator">
+                                        Installers
+                                    </li>
+                                    <li>
+                                        <a href="/fec_downloads" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/ferrite-wallet-svg.svg" alt="Ferrite Wallets Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Ferrite Wallets</span>
+                                            <span class="nav-subtext">Windows, MacOS, Ubuntu and Android wallets</span>
+                                        </div>
+                                        </a>
+                                        
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/ferritecoin/fext/releases/" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/fext-svg.svg" alt="FEXT ICON" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">FEXT</span>
+                                            <span class="nav-subtext">Send and view text inscriptions</span>
+                                        </div>
+                                        </a>
+                                    </li>
+                                    <!-- Downloads -->
+                                    <li class="dropdown dropdown-right">
+                                        <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/code-svg.svg" alt="downloads-icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Source Code > </span>
+                                            <span class="nav-subtext">Executables and source code.</span>
+                                        </div>
+                                        </a>
+                                        <ul class="dropdown-content">
+                                            <li class="dropdown-separator">
+                                                Source code
+                                            </li>
+                                        
+                                            <a href="https://github.com/ferritecoin/ferritecoin" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="../static/img/nav/ferrite-wallet-svg.svg" alt="Ferrite Wallet icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">ferrite-core</span>
+                                                    <span class="nav-subtext">Ferrite Core</span>
+                                                </div>
+                                            </a>
+                                            <a href="https://github.com/ferritecoin/fext" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="../static/img/nav/fext-svg.svg" alt="FEXT icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">ferritext</span>
+                                                    <span class="nav-subtext">FEXT</span>
+                                                </div>
+                                            </a>      
+                                            <a href="https://github.com/ferritecoin/wfec" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="../static/img/nav/wfec-bep20-svg.svg" alt="wfec icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">wfec</span>
+                                                    <span class="nav-subtext">Wrapped Ferrite written in solidity.</span>
+                                                </div>
+                                            </a> 
+                                            <a href="https://github.com/ferritecoin/ferritecoin-org-website" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="../static/img/nav/website-svg.svg" alt="website" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">ferritecoin.org</span>
+                                                    <span class="nav-subtext">ferritecoin.org website.</span>
+                                                </div>
+                                            </a>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <!-- Start - More details grey separator -->
+                            <li class="dropdown-separator">
+                                Blockchain
+                            </li>
+
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/fec-exp-svg.svg" alt="Ferrite Explorer" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Ferrite Explorer > </span>
+                                    <span class="nav-subtext">View Ferritecoin blocks, balances, transactions and address activity on the native blockchain.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+                                    <li class="dropdown-separator">
+                                        Tracked addresses balances
+                                    </li>
+                                    <li class="dropdown dropdown-right">
+                                        <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/data-center-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item"> 
+                                            <span class="nav-text">Tracked addresses > </span>
+                                            <span class="nav-subtext"></span>
+                                        </div>
+                                        </a>
+                                        <ul class="dropdown-content">
+                                            <li class="dropdown-separator">
+                                                Addresses
+                                            </li>
+                                            <li>
+                                                <a href="https://ferritecoin.org:53443/address/FWrapBEPabVWRMTU6uWjHiBaba9S1mejcR" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="../static/img/nav/wfec-bep20-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">wFEC Reserve Address</span>
+                                                        <span class="nav-subtext">The main address to store FEC backing wrapped Ferrite tokens.</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://ferritecoin.org:53443/address/FerriteBurnxxxxxxxxxxxxxxxxxzTe9HQ" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="../static/img/nav/burn-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">Burn Address</span>
+                                                        <span class="nav-subtext">Ferritecoins sent here are irreversibly taken out of circulation.</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://ferritecoin.org:53443/address/fec1qlayh4hktv69xeqxqxeqs5tcr7ups5ne52mff6w" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="../static/img/nav/xeggex-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">XeggeX Exchange</span>
+                                                        <span class="nav-subtext"></span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!--
+                                            <li>
+                                                <a href="https://ferritecoin.org" class="nav-link">
+                                                x
+                                                </a>
+                                            </li>
+                                            -->
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-separator">
+                                        Menu
+                                    </li>
+                                    <li>
+                                        <a href="https://ferritecoin.org:53443/movement" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/transfer-vertical-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Transfers</span>
+                                                <span class="nav-subtext">Track real-time transactions and monitor the flow of digital assets across the blockchain network.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://ferritecoin.org:53443/richlist" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/wallet-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Holders</span>
+                                                <span class="nav-subtext">Discover the wealthiest addresses on the blockchain and analyze the distribution of assets among top holders.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://ferritecoin.org:53443/info" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/api-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">API</span>
+                                                <span class="nav-subtext">Access comprehensive blockchain data and integrate real-time insights into your applications with our robust API.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li>
+                                        <a href="https://ferritecoin.org" class="nav-link">
+                                        x
+                                        </a>
+                                    </li>
+                                    -->
+                                </ul>
+                            </li>
+
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/pickaxe-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Mining > </span>
+                                    <span class="nav-subtext">Generating Ferritecoins.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+                                <li class="dropdown-separator">
+                                    Tracked addresses balances
+                                </li>
+                                <li class="dropdown dropdown-right">
+                                    <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/api-svg.svg" alt="Mining pools" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Mining Pools > </span>
+                                            <span class="nav-subtext">Lorem Ipsum</span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-content">
+                                        <li class="dropdown-separator">
+                                            Mining pools
+                                        </li>
+                                        <li>
+                                            <a href="https://aikapool.com/fec" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">aikapool.com</span>
+                                                    <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://bowserlab.ddns.net:8080/" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">bowserlab.ddns.net</span>
+                                                    <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                </div>                 
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://coinxpool.com/" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">coinxpool.com</span>
+                                                    <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://miningmypool.com/" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">miningmypool.com</span>
+                                                    <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.mining-dutch.nl/pools/ferrite.php" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">mining-dutch.nl</span>
+                                                    <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://zpool.ca/" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">zpool.ca</span>
+                                                <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="http://zergpool.com/" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">zergpool.com</span>
+                                                <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                            </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown dropdown-right">
+                                    <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/information-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Mining Aggregators > </span>
+                                            <span class="nav-subtext">Ferritecoin network and hashrate information.</span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-content">
+                                        <li class="dropdown-separator">
+                                            Mining aggregators
+                                        </li>
+                                        <li>
+                                            <a href="https://miningpoolstats.stream/ferrite" class="nav-link">
+                                                <div class="nav-details-container-item">
+                                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                </div>
+                                                <div class="nav-details-container-item">
+                                                    <span class="nav-text">MiningPoolStats</span>
+                                                    <span class="nav-subtext">Hashrate and block data</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!--
+                                        <li>
+                                            <a href="https://ferritecoin.org" class="nav-link">
+                                            x
+                                            </a>
+                                        </li>
+                                        -->
+                                    </ul>
+                                </li>
+                                <!-- Start - Mining -->
+                                <li class="dropdown-separator">
+                                    Help
+                                </li>
+                                <li>
+                                    <a href="https://github.com/koh-gt/ferrite-core/wiki/Mining-Pools-List" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/guide-svg.svg" alt="mining guide" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Mining Guide</span>
+                                            <span class="nav-subtext">Generating Ferritecoins</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!--
+                                <li>
+                                    <a href="https://ferritecoin.org" class="nav-link">
+                                    x
+                                    </a>
+                                </li>
+                                -->
+                                </ul>
+                            </li>
+
+                            
+                            <!-- Start - Wiki greyed out-->
+                            <!--
+                            <li>
+                                <a href="https://explorer3.ferritecoin.org" class="nav-link nav-grey-out">
+                                <div class="nav-details-container-item">
+                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text nav-grey-out">Wiki</span>
+                                    <span class="nav-subtext nav-grey-out">Getting started</span>
+                                </div>
+                                </a>
+                            </li>
+                            -->
+                        </div>
+                    </ul>
+                </li>
+
+
+                <li class="list__item text text--small text--regular dropdown">
+                    <a href=# class="nav-link">
+                        Community
+                    </a>
+                    <ul class="dropdown-content">
+                        <div class="dropdown-content-inner">
+                            <li class="dropdown-separator">
+                                Socials
+                            </li>
+                            <li>
+                                <a href="https://t.me/ferrite_core" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/telegram-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Telegram</span>
+                                    <span class="nav-subtext">Pavel Durov's home of crypto games.</span> 
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://x.com/ferritecoin" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/twitter-color-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">X | Twitter</span>
+                                    <span class="nav-subtext">Ex-Twitter, now Elon Musk's X.</span>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://discord.gg/qKgF5xhS5p" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/discord-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Discord</span>
+                                    <span class="nav-subtext">Favourite place for Discord moderators to hang out.</span>
+                                </div>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a href="https://www.reddit.com/r/Ferritecoin" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/reddit-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Reddit</span>
+                                    <span class="nav-subtext">The front page of the internet...</span>
+                                </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-separator">
+                                Forums
+                            </li>
+                            <li>
+                                <a href="https://ferritecoin.org:52443" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/forum-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Ferrite Forum</span>
+                                    <!-- <span class="nav-subtext">Lorem Ipsum</span> --> <!-- For future use -->
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://bitcointalk.org/index.php?topic=5434601.0g" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/forum-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Bitcointalk Thread</span>
+                                    <!-- <span class="nav-subtext">Lorem Ipsum</span> --> <!-- For future use -->
+                                </div>
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li class="list__item text text--small text--regular dropdown">
+                    <a href="#" class="nav-link">
+                        Market
+                    </a>
+                    <ul class="dropdown-content">
+                        <div class="dropdown-content-inner">
+                            <li class="dropdown-separator">
+                                Participate
+                            </li>
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="../static/img/nav/trade-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Trade > </span>
+                                    <span class="nav-subtext">Buy and sell Ferrite ecosystem cryptoassets.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+
+                                    <li class="dropdown-separator">
+                                        Exchanges
+                                    </li>
+
+                                    <li class="dropdown dropdown-right">
+                                        <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/xeggex-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">XeggeX > </span>
+                                            <span class="nav-subtext">Trade FEC and wFEC on XeggeX. Click to view assets page.</span>
+                                        </div>
+                                        </a>
+                                        <ul class="dropdown-content">
+                                        <li class="dropdown-separator">
+                                            Trading pairs
+                                        </li>
+                                        <li>
+                                            <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">FEC/USDT</span>
+                                                <span class="nav-subtext">Trade Ferritecoin (FEC) with Tether (USDT) stablecoin.</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">FEC/XPE</span>
+                                                <span class="nav-subtext">Trade Ferritecoin (FEC) with Xpense (XPE), XeggeX's exchange token</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">FEC/LTC</span>
+                                                <span class="nav-subtext">Trade Ferritecoin (FEC) using Litecoin (LTC).</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-separator">
+                                            Liquidity pools
+                                        </li>
+                                        <li>
+                                            <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">View Asset/Liquidity</span>
+                                                <span class="nav-subtext">Trade, add or remove from Ferritecoin's liquidity pools.</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <!--
+                                        <li>
+                                            <a href="https://ferritecoin.org" class="nav-link">
+                                            x
+                                            </a>
+                                        </li>
+                                        -->
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown dropdown-right">
+                                        <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/wfec-bep20-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Wrapped Ferrite > </span>
+                                            <span class="nav-subtext">Tokenised Ferrite compatible with DeFi wallets</span>
+                                        </div>
+                                        </a>
+                                        <ul class="dropdown-content">
+                                        <li class="dropdown-separator">
+                                            Decentralised Exchanges (DEX)
+                                        </li>
+                                        <li>
+                                            <a href="https://pancakeswap.finance/swap?outputCurrency=0xA846ab3673dfb3d27F81EcFe5BcA79c06120eE6D" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Pancakeswap</span>
+                                                <span class="nav-subtext">Trade wFEC on BEP-20</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://app.uniswap.org/#/swap?outputCurrency=0xA846ab3673dfb3d27F81EcFe5BcA79c06120eE6D" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Uniswap</span>
+                                                <span class="nav-subtext">Trade wFEC on BEP-20</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-separator">
+                                            Liquidity pools (DEX-LP)
+                                        </li>
+                                        <li>
+                                            <a href="https://pancakeswap.finance/liquidity/377069" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">WFEC/USDT</span>
+                                                <span class="nav-subtext">Pancakeswap WFEC LP pairing, range 0.001 to 0.1 USDT.</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://app.uniswap.org/pools/65559" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">WFEC/USDT</span>
+                                                <span class="nav-subtext">Uniswap WFEC LP pairing, range 0.001 to 0.1 USDT.</span>
+                                            </div>
+                                            </a>
+                                        </li>
+                                        <!--
+                                        <li>
+                                            <a href="https://ferritecoin.org" class="nav-link">
+                                            x
+                                            </a>
+                                        </li>
+                                        -->
+                                        </ul>
+                                    </li>
+
+                                    <li class="dropdown-separator">
+                                        Over-The-Counter (OTC)
+                                    </li>
+                                    <li>
+                                        <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="../static/img/nav/swap-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Caldera Trade</span>
+                                            <span class="nav-subtext">Trade FEC over-the-counter on Discord</span>
+                                        </div>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-separator">
+                                        Non-Fungible Tokens (NFTs)
+                                    </li>
+                                    <li>
+                                        <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">OKX</span>
+                                            <span class="nav-subtext">Trade NOTFEC NFT on OKX</span>
+                                        </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown dropdown-right">
+                                <a href="#" class="nav-link">
+                                <div class="nav-details-container-item">
+                                    <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                </div>
+                                <div class="nav-details-container-item">
+                                    <span class="nav-text">Economics > </span>
+                                    <span class="nav-subtext">Ferritecoin market information and analytics.</span>
+                                </div>
+                                </a>
+                                <ul class="dropdown-content">
+
+                                    <li class="dropdown-separator">
+                                        Market Aggregators
+                                    </li>
+                                    <li class="dropdown dropdown-right">
+                                        <a href="#" class="nav-link">
+                                        <div class="nav-details-container-item">
+                                            <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                        </div>
+                                        <div class="nav-details-container-item">
+                                            <span class="nav-text">Mainnet Ferrite > </span>
+                                            <span class="nav-subtext">Lorem Ipsum</span>
+                                        </div>
+                                        </a>
+                                        <ul class="dropdown-content">
+                                            <li class="dropdown-separator">
+                                                Market trackers
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">CoinPaprika</span>
+                                                        <span class="nav-subtext">Setup Ferrite Core</span>
+                                                    </div>   
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">LiveCoinWatch</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">CoinCodex</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">CoinMarketLeague</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">CoinCheckup</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">Blockspot</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">Coinranking</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                                    <div class="nav-details-container-item">
+                                                        <img src="images/ferrite-core-64px.png" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                                    </div>
+                                                    <div class="nav-details-container-item">
+                                                        <span class="nav-text">Coincu</span>
+                                                        <!-- <span class="nav-subtext">Setup Ferrite Core</span> -->
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                
+                                    <!--
+                                    <li>
+                                        <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/wfec-bep20-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Wrapped Ferrite Token</span>
+                                                <span class="nav-subtext">Tokenised Ferritecoin compatible with DeFi wallets.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                
+                                    -->
+
+                                    
+                                    <!-- Economics - Trade Panel -->
+                                    <!--
+                                    <li class="dropdown-separator">
+                                        Essentials
+                                    </li>
+                                    <li>
+                                        <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/website-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Trade Panel</span>
+                                                <span class="nav-subtext">Condensed Ferritecoin price information</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    -->
+
+                                    <!-- Economics - Trading Guide -->
+                                    <!--
+                                    <li class="dropdown-separator">
+                                        Help
+                                    </li>
+                                    <li>
+                                        <a href="https://explorer1.ferritecoin.org" class="nav-link">
+                                            <div class="nav-details-container-item">
+                                                <img src="../static/img/nav/guide-svg.svg" alt="Ferrite Core Setup Icon" class="nav-icon nav-details-container-image" />
+                                            </div>
+                                            <div class="nav-details-container-item">
+                                                <span class="nav-text">Trading Guide</span>
+                                                <span class="nav-subtext">Buying/Selling Ferritecoins</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    -->
+                                </ul>
+                            </li>
+
+
+                            <!-- end -->
+                        </div>
+                    </ul>
+                </li>
+
+                
+                
+                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        
+        {% block footer %}© 2022-2025 Ferritecoin{% endblock %}
+        
+    </footer>
+    </body>
+</html>

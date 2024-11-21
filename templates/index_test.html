@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferritecoin 3D Experience</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+        }
+        canvas { 
+            display: block; 
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0); 
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Scene setup
+const scene = new THREE.Scene();
+
+// Camera setup
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 1.5, 5); // Start position
+camera.rotation.order = "YXZ"
+
+// Renderer setup
+// Create the renderer
+const renderer = new THREE.WebGLRenderer({
+    antialias: true, // Enable anti-aliasing for smoother edges
+    gammaOutput: true, // Enable gamma output for better color reproduction
+    gammaFactor: 2.2, // Set gamma factor for more accurate color space
+});
+
+// Set the renderer size (you may want to set this based on the window size or a fixed resolution)
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Enable shadow map and set the resolution for shadows
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Use soft shadow maps for better quality
+renderer.shadowMap.width = 2048; // Increase shadow resolution for better quality
+renderer.shadowMap.height = 2048; // Increase shadow resolution for better quality
+
+// Enable high-quality textures (anisotropic filtering)
+renderer.getContext().getExtension('OES_texture_float'); // Enable float textures
+renderer.getContext().getExtension('OES_texture_float_linear'); // Enable linear filtering for float textures
+
+// Enable anisotropic filtering for better texture quality at oblique angles
+const textureLoader = new THREE.TextureLoader();
+const texture = textureLoader.load('path_to_texture.jpg');
+texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); // Set anisotropy to maximum for better texture quality
+
+// Use physically-based rendering (PBR) materials for high-quality materials
+const pbrMaterial = new THREE.MeshStandardMaterial({
+    roughness: 0.2,
+    metalness: 0.8,
+    //envMap: environmentMap, // Assuming environmentMap is set up for reflection
+});
+
+// Set high dynamic range (HDR) for realistic lighting
+renderer.toneMapping = THREE.LinearToneMapping;
+renderer.toneMappingExposure = 1.5; // Adjust exposure for better visual results
+
+
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Enable Pointer Lock on click
+renderer.domElement.addEventListener('click', () => {
+    renderer.domElement.requestPointerLock();
+});
+
+// Load .vox files (e.g., MagicaVoxel models)
+async function loadVoxModel(url, scene) {
+    const { VOXLoader } = await import('https://unpkg.com/three-voxel-loader'); // Dynamic import for VOXLoader
+    const loader = new VOXLoader();
+    
+    loader.load(url, (chunks) => {
+        chunks.forEach((chunk) => {
+            const mesh = VOXLoader.buildMesh(chunk);
+            mesh.scale.set(0.05, 0.05, 0.05); // Adjust scale as needed
+            mesh.position.set(0, 1, 0); // Adjust position as needed
+            scene.add(mesh);
+        });
+    });
+}
+
+// Call the loader function to add a .vox model to the scene
+//loadVoxModel('path/to/your/model.vox', scene);
+
+
+// Light sources
+scene.background = new THREE.Color(0x000000); // new THREE.Color(0x87CEEB); // Light blue sky color
+
+function GlowingBlock(position, color = 0xffffff, emissiveIntensity = 1.5, lightIntensity = 1.5, lightRange = 10) {
+    // Create a glowing material for the voxel block
+    const glowingMaterial = new THREE.MeshPhysicalMaterial({
+        color: color,  // The base color of the block
+        emissive: color, // The glow color (same as the block's color)
+        emissiveIntensity: emissiveIntensity, // Intensity of the glow
+        roughness: 0.4, // Adjust roughness for block texture
+        metalness: 0.1 // Adjust metalness for the material
+    });
+
+    // Create the voxel block geometry (1x1x1 cube)
+    const voxelGeometry = new THREE.BoxGeometry(1, 1, 1); 
+    const voxelMesh = new THREE.Mesh(voxelGeometry, glowingMaterial); // Create mesh with glowing material
+
+    // Set the position of the block
+    voxelMesh.position.set(position.x, position.y, position.z);
+
+    // Create a Point Light that emits from the block
+    const pointLight = new THREE.PointLight(color, lightIntensity, lightRange); // Light color, intensity, and range
+    pointLight.position.copy(voxelMesh.position); // Position the light at the block's position
+
+    // Enable shadows for the voxel block
+    voxelMesh.castShadow = true;  // Enable casting shadows
+    voxelMesh.receiveShadow = true;  // Enable receiving shadows
+
+    // Add both the voxel mesh and point light to the scene
+    scene.add(voxelMesh);
+    scene.add(pointLight);
+
+    // Return the created voxel block and light (for future manipulation, if needed)
+    return { voxelMesh, pointLight };
+}
+
+const QualitySettings = {
+    low: { roughness: 1, metalness: 0, transparency: 1, emissiveIntensity: 0, resolution: 256 },
+    medium: { roughness: 0.8, metalness: 0.3, transparency: 0.8, emissiveIntensity: 0.5, resolution: 256 },
+    high: { roughness: 0.4, metalness: 0.6, transparency: 0.5, emissiveIntensity: 0.8, resolution: 512 },
+    ultra: { roughness: 0.1, metalness: 1, transparency: 0.1, emissiveIntensity: 1, resolution: 1024 },
+};
+
+// Set the initial quality level (change as needed)
+let currentQuality = QualitySettings.ultra;
+
+class VoxelBlock {
+    constructor(type = 'standard', color = 0xffffff, quality = QualitySettings.ultra) {
+        this.type = type;
+        this.color = color;
+        this.quality = quality;
+        this.block = this.createBlock();
+    }
+
+    // Factory method to create the block based on type
+    createBlock() {
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        let material;
+
+        switch (this.type) {
+            case 'metallic':
+                material = new THREE.MeshPhysicalMaterial({
+                    color: this.color,
+                    roughness: 0.3,          // Low roughness for sharp reflections
+                    metalness: 0.7,          // High metalness for reflective quality
+                    envMap: scene.environment, // Environment map for reflections
+                    envMapIntensity: 1.0,
+                    //transmission: 0.3,       // Allows some transparency for semi-reflective effect
+                    //opacity: 0.7,            // Adjust transparency level
+                    transparent: false,       // Enables transparency effect
+                    //ior: 1.45,               // Index of refraction for glassy effect
+                    reflectivity: 0.7,       // Controls overall reflectivity
+                });
+                break;
+
+            case 'glass':
+                material = new THREE.MeshPhysicalMaterial({
+                    color: this.color,
+                    roughness: this.quality.roughness,
+                    metalness: 0,
+                    envMap: scene.environment, // Environment map for reflections
+                    envMapIntensity: 1.0,
+                    transmission: 0.6,       // Allows some transparency for semi-reflective effect
+                    opacity: 0.6,            // Adjust transparency level
+                    transparent: true,       // Enables transparency effect
+                    reflectivity: 0.9,
+                    ior: 3,
+                });
+                break;
+
+            case 'standard':
+            default:
+                material = new THREE.MeshPhysicalMaterial({
+                    color: this.color,
+                    roughness: this.quality.roughness,
+                    metalness: 0,
+                });
+                break;
+        }
+
+        const block = new THREE.Mesh(geometry, material);
+        block.castShadow = true;
+        block.receiveShadow = true;
+        return block;
+    }
+
+    // Method to add the block to a scene
+    addToScene(scene, position = { x: 0, y: 0, z: 0 }) {
+        this.block.position.set(position.x, position.y, position.z);
+        scene.add(this.block);
+    }
+}
+
+// Text Voxel class
+class TextVoxel {
+    constructor(x, y, z, text) {
+        // Voxel size
+        this.width = 1;
+        this.height = 1;
+        this.depth = 1;
+        this.text = text;
+
+        // Create geometry and material for the voxel
+        this.geometry = new THREE.BoxGeometry(this.width, this.height, this.depth);
+
+        // Create a canvas texture with the text
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 512;
+        canvas.height = 512;
+        ctx.fillStyle = 'white';
+        ctx.font = '48px Arial';
+        ctx.fillText(this.text, 50, 250);  // Position the text
+
+        // Create a texture from the canvas
+        const texture = new THREE.CanvasTexture(canvas);
+
+        // Create material using the texture
+        const material = new THREE.MeshBasicMaterial({
+            map: texture, // Use the canvas texture
+            side: THREE.DoubleSide, // Apply texture to both sides
+        });
+
+        // Create voxel mesh
+        this.voxelMesh = new THREE.Mesh(this.geometry, material);
+        this.voxelMesh.position.set(x, y, z);
+        
+        // Add voxel to the scene
+        scene.add(this.voxelMesh);
+    }
+}
+
+
+const standardBlock = new VoxelBlock('standard', 0x00ff00, QualitySettings.ultra);
+const metallicBlock = new VoxelBlock('metallic', 0x888888, QualitySettings.ultra);
+const glassBlock = new VoxelBlock('glass', 0xffffff, QualitySettings.ultra);
+
+
+const textvoxel = new TextVoxel(0, 0, -5, 'Hello, Voxel!');
+
+
+
+// Adding blocks to the scene with specified positions
+standardBlock.addToScene(scene, { x: 0, y: 5, z: 0 });
+metallicBlock.addToScene(scene, { x: 2, y: 5, z: 0 });
+glassBlock.addToScene(scene, { x: 6, y: 5, z: 0 });
+const glowingBlock1 = GlowingBlock(new THREE.Vector3(0, 3, 1));
+
+// Optional: Adjust the light in the scene
+const ambientLight = new THREE.AmbientLight(0x333333); // Low ambient light
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); // Reduced sunlight for emphasis
+directionalLight.position.set(5, 10, 7.5); // Position the light
+scene.add(directionalLight);
+
+// Floor setup
+const floorGeometry = new THREE.PlaneGeometry(100, 100);
+const floorMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x555555,
+    roughness: 3,          // Low roughness for sharp reflections
+    metalness: 0.1,          // High metalness for reflective quality
+    envMap: scene.environment, // Environment map for reflections
+    envMapIntensity: 1.0,
+    //transmission: 0.3,       // Allows some transparency for semi-reflective effect
+    //opacity: 0.7,            // Adjust transparency level
+    transparent: false,       // Enables transparency effect
+    ior: 1.45,               // Index of refraction for glassy effect
+    reflectivity: 0.9,       // Controls overall reflectivity
+    });
+const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+floor.rotation.x = -Math.PI / 2; // Rotate to make it horizontal
+floor.position.y = -0.5; // Set the floor height
+scene.add(floor);
+
+
+
+
+
+
+
+
+// animation loop time delay
+// physics loop
+// acceleration, velocity, mass
+// collision detecion
+//
+//////////////////////////////////////////////////////////////// MOVEMENT
+// Track rotation angles
+let yaw = 0; // Horizontal angle
+let pitch = 0; // Vertical angle
+
+// Store keystates for continuous movement
+const keys = {};
+
+// Mouse sensitivity (adjust to your preference)
+const sensitivity = 0.001;
+
+// Mouse position for raycasting
+let mouseX = 0;
+let mouseY = 0;
+
+
+
+// Mouse movement handler for rotation
+document.addEventListener('mousemove', (event) => {
+
+    if (document.pointerLockElement === renderer.domElement) {
+        // Calculate rotation angles based on mouse movement
+        yaw -= event.movementX * sensitivity;
+        pitch -= event.movementY * sensitivity;
+
+        // Limit vertical angle to prevent flipping
+        pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
+
+        // Apply the rotation to the camera
+        camera.rotation.set(pitch, yaw, 0);
+
+        console.log("Position", camera.position)
+        console.log("Rotation", camera.rotation)
+        console.log("World Direction", camera.getWorldDirection())
+    }
+});
+
+function handleKeyDown(event) {
+    if (event.code === 'Space') {
+        const currentTime = performance.now();
+        
+        // Check if the spacebar was double-tapped within 300ms
+        if (currentTime - lastSpaceTapTime < 300) {
+            toggleFlyMode();
+        }
+
+        // Update the last space tap time
+        lastSpaceTapTime = currentTime;
+    }
+}
+
+// Event listeners for keydown and keyup
+document.addEventListener('keydown', (event) => { keys[event.code] = true; });
+document.addEventListener('keyup', (event) => { keys[event.code] = false; });
+lastSpaceTapTime = performance.now();
+
+// Camera physics variables
+const velocity = new THREE.Vector3(); // Current velocity of the camera
+const acceleration = 60; // Acceleration rate
+
+const delta_time = 0.015; // Time in seconds (converted from ms)
+
+const drag = 0.05 ** delta_time; // Drag factor per second to decelerate when not accelerating
+const damping = 0; // No damping, so no deceleration on the perpendicular velocity
+const maxSpeed = 30; // Maximum movement speed m/s
+
+const delta_velocity = acceleration * delta_time;
+
+const maxCameraSize = 0.5; // Half-width/height/length of the camera's "bounding box"
+
+// Define camera's bounding box (AABB)
+const cameraBoundingBox = new THREE.Box3();
+
+const collisionDistance = 3; // Minimum distance to detect collision
+
+// Function to update camera's AABB (Axis-Aligned Bounding Box)
+function updateCameraBoundingBox() {
+    cameraBoundingBox.setFromCenterAndSize(camera.position, new THREE.Vector3(maxCameraSize, maxCameraSize, maxCameraSize));
+}
+
+// Function to check AABBs for collision and resolve the collision
+function checkCollisionAndBounce(position, velocity) {
+    updateCameraBoundingBox();
+
+    let newVelocity = velocity.clone();
+    let newPosition = position.clone();
+
+    // Loop through all objects in the scene and check for collision
+    for (let i = 0; i < scene.children.length; i++) {
+        const object = scene.children[i];
+        if (object.geometry) {
+            const objectBoundingBox = new THREE.Box3().setFromObject(object);
+
+            if (cameraBoundingBox.intersectsBox(objectBoundingBox)) {
+                // Collision detected - resolve the collision
+                const collisionNormal = new THREE.Vector3();
+
+                // Find the direction of the collision and compute the normal
+                if (position.x < objectBoundingBox.min.x || position.x > objectBoundingBox.max.x) {
+                    collisionNormal.x = position.x < objectBoundingBox.min.x ? 1 : -1;
+                }
+                if (position.y < objectBoundingBox.min.y || position.y > objectBoundingBox.max.y) {
+                    collisionNormal.y = position.y < objectBoundingBox.min.y ? 1 : -1;
+                }
+                if (position.z < objectBoundingBox.min.z || position.z > objectBoundingBox.max.z) {
+                    collisionNormal.z = position.z < objectBoundingBox.min.z ? 1 : -1;
+                }
+
+                // Normalize the collision normal
+                collisionNormal.normalize();
+
+                // Decompose the velocity into parallel and perpendicular components to the normal
+                const perpendicularVelocity = collisionNormal.multiplyScalar(velocity.dot(collisionNormal));
+                const parallelVelocity = velocity.clone().sub(perpendicularVelocity);
+
+                // No damping, so use the parallel velocity as-is
+                newVelocity = parallelVelocity;
+
+                // Push the camera away from the object slightly to resolve penetration
+                const pushBackDistance = Math.max(0.1, collisionDistance); // Adjust based on desired "push-back" distance
+                newPosition = position.clone().add(collisionNormal.multiplyScalar(-0.01 * pushBackDistance));
+            }
+        }
+    }
+
+    return { newPosition, newVelocity };
+}
+
+// Physics loop for smooth movement
+function physicsLoop() {
+    const forward = new THREE.Vector3();
+    camera.getWorldDirection(forward);
+
+    const sideways = new THREE.Vector3().crossVectors(camera.up, forward).normalize();
+    const upwards = camera.up.normalize();
+
+    // Apply acceleration based on key inputs
+    if (keys['KeyW']) velocity.add(forward.clone().multiplyScalar(delta_velocity));
+    if (keys['KeyS']) velocity.add(forward.clone().multiplyScalar(-delta_velocity));
+    if (keys['KeyA']) velocity.add(sideways.clone().multiplyScalar(delta_velocity));
+    if (keys['KeyD']) velocity.add(sideways.clone().multiplyScalar(-delta_velocity));
+    if (keys['Space']) velocity.add(upwards.clone().multiplyScalar(delta_velocity));
+    if (keys['ShiftLeft']) velocity.add(upwards.clone().multiplyScalar(-delta_velocity));
+
+    // Cap the velocity to max speed
+    velocity.clampLength(0, maxSpeed);
+
+    if (velocity.length() > 0) {
+        // Check for collision and adjust position and velocity if needed
+        const { newPosition, newVelocity } = checkCollisionAndBounce(camera.position, velocity);
+        camera.position.copy(newPosition);  // Update camera position
+        velocity.copy(newVelocity);  // Update velocity
+
+        // Update the camera's position based on velocity
+        const delta_displacement = velocity.clone().multiplyScalar(delta_time);
+        camera.position.add(delta_displacement);
+
+        // Apply drag to slow down
+        velocity.multiplyScalar(drag);
+    }
+
+    // Stop the camera if the velocity is negligible
+    if (velocity.length() < 0.00001) {
+        velocity.set(0, 0, 0);
+    }
+
+    // Run physics loop at a fixed interval
+    setTimeout(physicsLoop, delta_time * 1000);
+}
+
+physicsLoop();
+
+
+// Escape key listener to exit pointer lock
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'Escape') {
+        document.exitPointerLock();
+    }
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+
+    renderer.render(scene, camera);
+}
+animate();
+
+
+/*
+Script files
+initialising
+renderer
+
+block/voxel types
+physics
+
+on-chain
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

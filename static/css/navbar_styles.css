@@ -1,0 +1,312 @@
+/* Basic styles for the navbar */
+.navbar {
+    background: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(10px); 
+    padding: 0px;
+    border-radius: 0px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    min-height: 90px;    /*temp, likely permanent*/
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    justify-content: left; /*space-between; */
+    align-items: center;
+}
+
+/* Mobile menu icon */
+.mobile-menu-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.mobile-menu-icon span {
+    background: #ffffff;
+    border-radius: 2px;
+    height: 3px;
+    margin-right: 60px;
+    margin-top: 6px;
+    width: 25px;
+}
+
+/* Dropdown separator */
+.dropdown-separator {
+    border-top: 0px solid #777777;
+    border-bottom: 1px solid #777777;
+    padding-top: 0px;
+    padding-left: 5px;
+    color: #777777;
+    font-size: 12px;
+    text-align: left;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0px;
+    margin-right: 30vw;
+    display: flex;
+    font-family: "Open Sans", sans-serif;
+}
+
+.list--inline {
+    display: flex;
+}
+
+.list__item {
+    position: relative;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 20px 2vw;   /* spacing between submenu items - originally 10px 10px*/
+    display: inline-flex;
+    color: #777777; 
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #7b1818; 
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: #ffffff; 
+    background-color: #f63030; 
+}
+
+/* Dropdown edge fix */
+.dropdown-right, .dropdown-content-inner, .dropdown-content {
+  list-style-type:none;
+}
+
+/* Dropdown styles */
+.dropdown-content {
+    display: none;
+    position: fixed;
+    left: 0px;
+    width: 100vw; 
+    height: auto;
+    /*overflow: show;*/
+    z-index: 1;
+
+
+    background-color: rgba(0, 0, 0, 0.236); 
+    backdrop-filter: blur(5px); 
+
+    padding-left: 0;
+
+    transition: all 0.3s ease;
+}
+
+.dropdown-content-inner {
+    background-color: rgba(0, 0, 0, 0); 
+    backdrop-filter: blur(5px);  
+    border-radius: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: inline-block;
+
+    width: 25vw;
+
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a {
+    color: #ffffff; 
+    padding-left: 16px;
+    padding-right: 16px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f63030; 
+    color: #ffffff; 
+}
+
+.dropdown-right .dropdown-content {
+    /*top: relative - 100px;   /* so that it opens to the side*/
+    /*top: relative;*/
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 25vw;
+    min-height: 100%;
+    margin-left: 0;
+    background-color: rgba(0, 0, 0, 0); 
+    backdrop-filter: blur(5px); 
+    border-radius: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    transition: all 0.3s ease;
+}
+
+/* Fade-in and fade-out animations */
+.fade-in {
+    animation: fadeIn 0.3s forwards;
+}
+.fade-out {
+    animation: fadeOut 0.3s forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-200px); visibility: visible; }
+    to { opacity: 1; transform: translateY(0); visibility: visible; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); visibility: visible; }
+    to { opacity: 0; transform: translateY(-200px); visibility: hidden; }
+}
+
+/* Content margin */
+.content {
+    margin-top: 70px; 
+    padding: 20px;
+}
+
+/* Icon and subtext styling */
+.nav-icon {
+    width: 40px;
+    height: 40px;
+    padding-right: 0px;
+    vertical-align: middle;
+}
+
+/*Spacing for description boxes - ensure the icons have space too or it overflows to below the icon.*/
+.nav-text {
+    display: inline-flex;
+    font-size: 17px;
+    color: #ffffff; 
+    padding: 0px 0px;
+    margin:0;
+    margin-bottom: 0.9rem;
+    line-height:0.9;
+    width: 200px;
+}
+.nav-subtext {
+    display: block;
+    font-size: 13px;
+    color: #bbbbbb; 
+    padding: 0px 0px;
+    margin:0;
+    margin-bottom: 0.5rem;
+    line-height:0.9;
+    width: 200px;
+}
+
+.nav-grey-out {
+    color: #555555; /* Light grey color */
+    pointer-events: none; /* Optional: disable clicking */
+    cursor: default; /* Optional: change cursor to default */
+}
+
+.nav-details-container-item {
+    display:inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+.nav-details-container-image {
+    display:inline-block;
+    margin:auto;
+}
+
+/* Header logo styling */
+.nav-header-logo {
+    width: 184px;
+    height: 64px;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+    vertical-align: middle;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 1050px) {
+
+    .navbar {
+        justify-content: space-between;
+    }
+    .list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8); 
+        backdrop-filter: blur(10px); 
+        position: absolute;
+        top: 50px;
+        left: 0;
+        padding: 10px 0;
+
+	/* scroll the navbar if overflow */
+	max-height: calc(60vh - 20px);
+        overflow-y: auto;
+    }
+    .list__item {
+        text-align: right;
+    }
+    .list--inline {
+        display: flex;
+        flex-direction: column;
+	    /*margin-top: 20px;*/
+    }
+    .dropdown-content {
+        position: relative;
+        width: 100%;
+    }
+    .dropdown-right .dropdown-content {
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .mobile-menu-icon {
+        display: flex;
+    }
+
+    .dropdown > .nav-link::after {
+        content: '\25BC'; 
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    .dropdown.open > .dropdown-content {
+        display: block;
+    }
+}
+
+/* Ensure consistent font size across other media queries */
+/* @media (min-width: 768px) and (max-width: 900px) { */
+@media  (max-width: 1050px) {
+    .nav-link, .dropdown-content a {
+        font-size: 16px; /* Explicitly set the font size */
+    }
+    .dropdown-content-inner {
+	width: 100vw;
+	border-radius: 0px;
+    }
+    .dropdown-right .dropdown-content {
+	border-radius: 0px;
+    position: relative;
+    min-height: none;
+    }
+
+    .fade-out {
+	animation: fadeOut 0s forwards;
+    }
+    .nav-link {
+	text-align:left
+    }
+}

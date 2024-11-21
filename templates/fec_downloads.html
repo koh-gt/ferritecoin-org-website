@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Ferrite Ecosystem | ferritecoin.org | FEC{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/styles.css">
+{% endblock %}  
+
+{% block scripts %}
+
+{% endblock %}   
+
+{% block content %}
+<div class="container">
+    <h1>Ferritecoin software</h1>
+    <div class="categories">
+        <div class="category">
+            <img src="windows-logo.png" alt="Windows Logo" class="category-logo">
+            <h2>Windows</h2>
+            <ul>
+                <li><a href="#" download class="download-link">Windows Installer (.exe)</a></li>
+                <li><a href="#" download class="download-link">Windows Zip Archive (.zip)</a></li>
+            </ul>
+        </div>
+        <div class="category">
+            <img src="macos-logo.png" alt="MacOS Logo" class="category-logo">
+            <h2>MacOS</h2>
+            <ul>
+                <li><a href="#" class="download-link">Mac Installer (.dmg)</a></li>
+                <li><a href="#" class="download-link">Mac Zip Archive (.zip)</a></li>
+            </ul>
+        </div>
+        <div class="category">
+            <img src="ubuntu-logo.png" alt="Ubuntu Logo" class="category-logo">
+            <h2>Ubuntu</h2>
+            <ul>
+                <li><a href="#" class="download-link">Ubuntu Installer (.deb)</a></li>
+                <li><a href="#" class="download-link">Ubuntu Zip Archive (.zip)</a></li>
+            </ul>
+        </div>
+        <div class="category">
+            <img src="android-logo.png" alt="Android Logo" class="category-logo">
+            <h2>Android</h2>
+            <ul>
+                <li><a href="#" class="download-link">Android APK (.apk)</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="historical-downloads">
+        <h2>Historical Downloads</h2>
+        <div class="historical-columns">
+            <div class="historical-column">
+                <h3>Windows</h3>
+                <ul>
+                    <li><a href="#">Windows Version 1.0 (.exe)</a></li>
+                    <li><a href="#">Windows Version 1.1 (.exe)</a></li>
+                    <li><a href="#">Windows Version 1.2 (.exe)</a></li>
+                </ul>
+            </div>
+            <div class="historical-column">
+                <h3>MacOS</h3>
+                <ul>
+                    <li><a href="#">MacOS Version 1.0 (.dmg)</a></li>
+                    <li><a href="#">MacOS Version 1.1 (.dmg)</a></li>
+                    <li><a href="#">MacOS Version 1.2 (.dmg)</a></li>
+                </ul>
+            </div>
+            <div class="historical-column">
+                <h3>Ubuntu</h3>
+                <ul>
+                    <li><a href="#" download>Ubuntu Version 1.0 (.deb)</a></li>
+                    <li><a href="#" download>Ubuntu Version 1.1 (.deb)</a></li>
+                    <li><a href="#" download>Ubuntu Version 1.2 (.deb)</a></li>
+                </ul>
+            </div>
+            <div class="historical-column">
+                <h3>Android</h3>
+                <ul>
+                    <li><a href="#">Android Version 1.0 (.apk)</a></li>
+                    <li><a href="#">Android Version 1.1 (.apk)</a></li>
+                    <li><a href="#">Android Version 1.2 (.apk)</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}   

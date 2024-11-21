@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}FEXT Faucet - Free Ferritecoins.{% endblock %}
+<link rel="icon" type="image/x-icon" href="favicon.png">
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/styles.css">
+<style>
+    .container { margin-bottom: 1vh; flex-direction: column;}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<!-- Include reCAPTCHA script -->
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
+
+<script>
+    let token = ''; // Initialize token as an empty string
+
+    function fetchLogData() {
+        fetch('/get_log_data')
+            .then(response => response.json())
+            .then(data => {
+                let logText = data.log_text.join("\n");
+                document.getElementById('pastClaims').value = logText;
+                
+            });
+    }
+
+    function sanitizeInput(input) {
+        return input.replace(/[<>]/g, "").trim();
+    }
+
+    function sendAddress() {
+        let rawAddress = document.getElementById('address-input').value;
+        let sanitizedAddress = sanitizeInput(rawAddress);
+
+        // Check if the token is available
+        if (!token) {
+            alert("Please complete the CAPTCHA.");
+            return;
+        }
+
+        fetch('/claim_faucet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'address=' + sanitizedAddress + '&hcaptcha=' + token,
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('message').textContent = data.message;
+
+            if (data.status === 'error' && data.message.includes('Please wait')) {
+                startTimer(parseInt(data.message.match(/\d+/)[0]));  // Start timer if there's a wait
+            }
+
+            // Reset CAPTCHA
+            grecaptcha.reset();
+            fetchLogData();
+            
+        });
+    }
+
+    fetchLogData();
+
+    function onHcaptchaSuccess(recaptchaToken) {
+        token = recaptchaToken; // Store the token
+    }
+
+</script>
+{% endblock %}
+
+
+{% block content %}
+<h1>Free Ferritecoins</h1>
+<div class="container">
+    <h2>🚿 Ferrite Faucet</h2>
+    <div class="textbox">
+        Welcome to the Ferritecoin (FEC) Faucet, your opportunity to claim <strong>5 FEC</strong> for free! 
+        Simply complete the hCaptcha and enter your Ferritecoin receiving address. The claimed coins will be sent to you instantly.
+    </div>
+    <h3>ℹ️ What is Ferritecoin (FEC)?</h3>
+    <div class="textbox">
+        Ferritecoin is a decentralized cryptocurrency powered by mining and controlled by its network of users. 
+        With no premine or developer allocations, Ferritecoin offers a fair distribution model for everyone in the community.
+    </div>
+    <h3>📥 How to get a Ferrite receiving address?</h3>
+    <div class="textbox">
+        You can get a Ferrite receiving address using one of the following wallets:
+        <ul>
+            <li><a href="/download">Ferrite Core</a> wallet</li>
+            <li><a href="/download">Android wallet</a></li>
+            <li><a href="/wallet">Web wallet</a></li>
+        </ul>
+    </div>
+    
+</div>
+
+<div class="container">
+    <label for="message-input"><h2>Address:</h2></label>
+        <div id="message" style="color: #ff00ff; ">Ferritecoin faucet is available.</div>
+        <div style="display: flex;">
+            <input type="text" id="address-input" style="width: 90%; padding-left: 20px;" />
+            <button id="sendAddressButton" onclick="sendAddress()">Claim</button>
+        </div>
+        <!-- Add reCAPTCHA widget -->
+        <div class="h-captcha" style="padding: 10px;" data-sitekey="05f80e5a-57de-4996-a66c-608ef73cf762" data-callback="onHcaptchaSuccess"></div>
+</div>
+
+<div class="container">
+    <h2>Faucet Claims</h2>
+    <textarea id="pastClaims" style="height: 35vh;" readonly></textarea>
+</div>
+
+{% endblock %}

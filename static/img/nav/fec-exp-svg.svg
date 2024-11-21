@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128.205" height="128.174" viewBox="0 0 4096 4095">
+  <defs>
+    <style>
+      .cls-1, .cls-5 {
+        fill: #626262;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9 {
+        fill-rule: evenodd;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        opacity: 0.62;
+      }
+
+      .cls-2, .cls-6 {
+        fill: #9c9c9c;
+      }
+
+      .cls-3, .cls-7 {
+        fill: #fff;
+      }
+
+      .cls-9 {
+        fill: white;
+      }
+    </style>
+  </defs>
+  <path id="l3-vec-darkgray" class="cls-1" d="M2048,3612L0,2589v483L2048,4095V3612Zm78-1525v327l1892-947V1141Z"/>
+  <path id="l3-vec-lightgray" class="cls-2" d="M4096,2589v483L2048,4095V3612Z"/>
+  <path id="l3-vec-whitetop" class="cls-3" d="M2048,1565L4096,2589,2048,3612,0,2589Z"/>
+  <path id="l3-vec-topcircle" class="cls-4" d="M2047.5,1958c696.71,0,1261.5,282.06,1261.5,630s-564.79,630-1261.5,630S786,2935.94,786,2588,1350.79,1958,2047.5,1958Z"/>
+  <path id="l2-vec-darkgray" class="cls-5" d="M2048,3313V2829L0,1806v483Z"/>
+  <path id="l2-vec-lightgray" class="cls-6" d="M2048,2829L4096,1806v483L2048,3313V2829Z"/>
+  <path id="l2-vec-whitetop" class="cls-7" d="M2048,782L4096,1806,2048,2829,0,1806Z"/>
+  <path class="cls-8" d="M2047.5,1175c696.71,0,1261.5,282.06,1261.5,630s-564.79,630-1261.5,630S786,2152.94,786,1805,1350.79,1175,2047.5,1175Z"/>
+  <path id="l1-vec-dark" class="cls-5" d="M0,1507L2048,2531V2047L0,1024v483Z"/>
+  <path id="l1-vec-lightgray" class="cls-6" d="M4096,1024v483L2048,2531V2047Z"/>
+  <path id="l1-vec-whitetop" class="cls-7" d="M0,1024L2048,0,4096,1024,2048,2047ZM2048,2829"/>
+  <path class="cls-8" d="M2046,393c696.98,0,1262,281.837,1262,629.5S2742.98,1652,2046,1652,784,1370.16,784,1022.5,1349.02,393,2046,393Z"/>
+  <path id="l1-vec-logo" class="cls-9" d="M1840,1154l98,181,528-69L2285,932l359-180-54-28L2261,888l-99-181-527,70s185.26,333.51,181,334-366,182-366,182l56,28Zm150,133L1729,806l381-51,261,481Z"/>
+</svg>

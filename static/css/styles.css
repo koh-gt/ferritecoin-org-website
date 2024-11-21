@@ -1,0 +1,458 @@
+.hidden {
+    display: none !important;
+}
+
+/* General Body Styling */
+body {
+    margin: 0 auto; /* center by height*/
+    padding: 0;
+    color: #fff;
+    font-family: 'Ubuntu', Ubuntu, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*justify-content: center;*/
+    height: 100vh;
+    overflow: scroll;
+
+    background-image: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(../img/ferrite-mono-xl.svg), radial-gradient(#ffd700,#7b1818,#181818);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    background-attachment: fixed; /*follows mouse movement*/
+}
+/*
+body {
+    margin: 0;
+    padding: 0;
+    background: #181917;
+    color: #fff;
+    font-family: 'Ubuntu', Ubuntu, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    overflow: scroll;
+
+    background-image: url(ferrite-mono-xl.svg);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    background-attachment: fixed;        follows mouse movement
+} 
+    */
+
+.navlink {
+    color: orange;
+}
+
+h1 {
+    font-family: 'Monserrat', Ubuntu, monospace;
+    font-size: 3rem;
+    text-align: left;
+    
+    padding-left: 1vw;
+    color: #fff;
+
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+h2 {
+    font-family: 'Monserrat', Ubuntu, monospace;
+    font-size: 1.5rem;
+    text-align: left;
+    
+    padding-left: 1vw;
+    color: #fff;
+
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+}
+
+h3 {
+    font-family: 'Monserrat', Ubuntu, monospace;
+    font-size: 1.25rem;
+    text-align: left;
+    
+    padding-left: 1vw;
+    color: #fff;
+
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+}
+
+/* Container Styling */
+.container {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ff3535;
+    padding-right: 1vw;
+    border-radius: 1vh;
+    width: 90vw;
+    margin: 1vw 0;
+    display: flex;
+    flex-direction: row;
+}
+
+/* QR Code areas*/
+.qrcode-placeholder {
+    width: 200px;
+    height: 200px;
+
+    position: relative;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+    opacity: 1;
+    animation: cornerPlaceAnimation 1s forwards;
+
+}
+.qrcode-placeholder p {
+    font-family: 'Consolas', Ubuntu, monospace;
+    margin: 0;
+    padding: 0 5px;
+}
+
+.qrcode-placeholder::before,
+.qrcode-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    opacity: 0;
+    animation: cornerAnimation 1s forwards;
+
+}
+/* qr code shape*/
+.qrcode-placeholder::before {top: -3px;left: -3px;border-right: none;border-bottom: none;
+}
+.qrcode-placeholder::after {bottom: -3px;right: -3px;border-left: none;border-top: none;
+}
+
+@keyframes cornerAnimation {
+    0% {width: 0px;height: 0px;opacity: 0;}
+    25% {width: 10px;height: 0px;opacity: 0.4;}
+    50% {width: 20px;height: 0px;opacity: 0.7;}
+    50% {width: 20px;height: 10px;opacity: 0.9;}
+    100% {width: 20px;height: 20px;opacity: 1;}
+}
+@keyframes cornerPlaceAnimation {
+    0% {width: 30px;height: 178px;opacity: 0;}
+    50% {width: 178px;height: 178px;opacity: 0.8;}
+    100% {width: 178px;height: 178px;opacity: 1;}
+}
+
+/* Textareas */
+textarea {
+    font-family: 'Monserrat', Ubuntu, monospace;
+    width: 96%;
+    background-color: rgba(15, 15, 15, 0.3);
+    border: 1px solid #2C2C2C;
+    transition: border 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+
+    color: #ffffff;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-left: 1vw;
+    margin-right: 3vw;
+    margin-bottom: 1vh;
+    border-radius: 5px;
+    font-size: 0.8rem;
+
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+input {
+    font-family: 'Monserrat', Ubuntu, monospace;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid #2C2C2C;
+    border-radius: 8px;
+    transition: border 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+
+    color: #ffffff;
+    padding-left: 1.0vw;
+    padding-top: 1.0vh;
+    padding-bottom: 1.0vh;
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+input:focus, textarea:focus{
+    border-color: #FF007A; /* Pink focus border */
+    outline: none;
+}
+
+.form-section {
+    padding: 10px;
+    border-radius: 5px; /* Smooth rounded corners */
+    border: none; /* Subtle border */
+    margin-bottom: 20px;
+    max-width: 500px; /* Wider fields */
+    color: #f0f0f0; /* Light text for contrast */
+}
+
+.form-section p {
+    margin: 10px 1vw;
+    font-size: 1rem;
+    color: #bbb; /* Softer color for labels */
+}
+
+/* Container for output sections */
+.output-section {
+    padding: 20px;
+    border-radius: 12px; /* Smooth rounded corners */
+    border: none; /* Subtle border */
+    margin-bottom: 20px;
+    max-width: 500px; /* Wider fields */
+    color: #f0f0f0; /* Light text for contrast */
+}
+
+/* Styling each field within output sections */
+.output-section p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #bbb; /* Softer color for labels */
+}
+
+/* Styling for the output values */
+.output-section span {
+    font-family: 'Source Code Pro', Ubuntu, monospace;
+    width: 100%; /* Full width for a modern look */
+
+    display: block; /* Makes the span take full width */
+    padding: 1vh 1vw;
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent for contrast */
+    border-radius: 5px; /* Smooth rounded corners */
+    
+    text-align: left; /* Left align */
+    font-weight: bold; /* Bold text for emphasis */
+    color: #f0f0f0; /* Light text for readability */
+    cursor: pointer; /* Shows it's clickable */
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease;
+}
+
+/* Highlight the output field on hover */
+.output-section span:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Highlight on hover */
+    transform: scale(1.02); /* Slight hover effect */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); /* Deeper shadow */
+}
+
+
+/* Button Styling */
+button {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: 1px solid #2c2c2c;
+    border-radius: 5px;
+    padding: 2vh 2vw;
+    margin-left: 1vw;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    border: 1px solid #ff3535;
+    background-color: rgba(246, 48, 48, 0.2);
+    color: white;
+    box-shadow: none;
+}
+
+/* Neon-like status display */
+#status, #message {
+    font-family: 'Source Code Pro', Ubuntu, monospace;
+    width: 96%; /* Full width for a modern look */
+    overflow: auto;
+    padding-left: 1vw;      margin-left: 1vw;
+    padding-right: 1vw;     margin-right: 1vw;
+    padding-top: 0.5vh;     margin-top: 0.5vh;
+    padding-bottom: 1vh;    margin-bottom: 1vh;
+    
+    background-color: rgba(15, 15, 15, 0.7); /* Semi-transparent for contrast */
+    border-radius: 5px; /* Smooth rounded corners */
+    border: 1px solid #2C2C2C;
+    
+    text-align: left; /* Left align */
+    font-weight: bold; /* Bold text for emphasis */
+    color: #f0f0f0; /* Light text for readability */
+    cursor: pointer; /* Shows it's clickable */
+    transition: border 0.3s ease, transform 0.3s ease-in-out, background-color 0.3s ease;
+}
+
+
+#confirmationModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: rgba(15, 15, 15, 0.7); /* Semi-transparent for contrast */
+    border-radius: 5px; /* Smooth rounded corners */
+    border: 1px solid #2C2C2C;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: rgba(15, 15, 15, 0.7); /* Semi-transparent for contrast */
+    border-radius: 5px; /* Smooth rounded corners */
+    border: 1px solid #2C2C2C;
+
+    padding: 2vh 2vw;
+    
+    text-align: center;
+    max-width: 40vw;
+    min-width: 400px;
+}
+
+/* Web wallet styles*/
+.column {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 16px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.column-wider {
+    flex: 1;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 16px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Desktop view styles */
+.operations-desktop {
+    display: flex;
+    flex-direction: column;
+}
+
+/* LARGE OPERATION BUTTON*/
+.operations-desktop button {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #2c2c2c;
+    color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.operations-desktop button:hover {
+    border: 1px solid #ff3535;
+    background-color: rgba(246, 48, 48, 0.2);
+    color: white;
+    box-shadow: none;
+}
+
+.operations-desktop button.active {
+    border: 1px solid #ff3535;
+    background-color: rgba(246, 48, 48, 1);
+    color: white;
+}
+
+/* Mobile view styles */
+.operations-mobile {
+    display: none;
+}
+
+#operation-menu {
+    display: none;
+    background-color: #2B2B2B;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+#operation-menu button {
+    display: block;
+    background-color: #2B2B2B;
+    border: none;
+    color: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#operation-menu button:hover {
+    box-shadow: 0px 0px 15px 5px rgba(99, 110, 255, 0.7);
+}
+
+#operation-menu button.active {
+    background-color: #636EFF;
+}
+
+.toggle-menu {
+    background-color: #2B2B2B;
+    padding: 15px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.toggle-menu:hover {
+    box-shadow: 0px 0px 15px 5px rgba(99, 110, 255, 0.7);
+}
+@media (min-width: 900px){
+    .operations-desktop{
+        max-width: 300px;
+    }
+
+}
+/* Responsive Media Query */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .operations-desktop {
+        display: none;
+    }
+
+    .operations-mobile {
+        display: block;
+    }
+
+    .column {
+        padding: 10px;
+    }
+}
+
+
+/* Animation on page load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+body {
+    animation: fadeIn 1s ease-in-out;
+}

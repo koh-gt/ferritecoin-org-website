@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+    
+{% block title %}FEXT - A free anonymous blockchain messenger powered by Ferritecoin.{% endblock %}
+<link rel="icon" type="image/x-icon" href="../static/img/favicon.svg">
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/styles.css">
+<style>    
+    .container { margin-bottom: 1vw; flex-direction: column;}
+</style>
+{% endblock %}  
+
+{% block scripts %}
+<script async>
+    async function fetchDataInit() {
+        fetch('/get_data_init')
+            .then(response => response.json())
+            .then(data => {
+                let mempoolText = data.mempool_data.join("\n");
+                document.getElementById('mempool-messages').value = mempoolText;
+
+                let blockText = data.block_data.join("\n");
+                document.getElementById('block-messages').value = blockText;
+            });
+    }
+    fetchDataInit();
+</script>
+
+<script async defer>
+
+    let token = ''; // Initialize token as an empty string
+
+    async function sanitizeInput(input) {
+        return input.replace(/[<>]/g, "").trim();
+    }
+
+    let previousBlockHeight = null;
+    let previousMempoolMessageCount = null;
+    async function fetchDataCheck() {
+        fetch('/get_block_stats')
+            .then(response => response.json())
+            .then(data => {
+                let currentBlockHeight = data.block_height;
+                let currentMempoolMessageCount = data.mempool_message_count;
+                
+                if (previousBlockHeight === null || currentBlockHeight !== previousBlockHeight){
+                    previousBlockHeight = currentBlockHeight;
+                    preciousMempoolMessageCount = currentMempoolMessageCount;
+                    fetchData();
+                } else if (previousMempoolMessageCount === null || currentMempoolMessageCount !== preciousMempoolMessageCount) {
+                    previousMempoolMessageCount = currentMempoolMessageCount;
+                    fetchMempoolData();
+                }
+            });
+    }
+    
+    async function fetchData() {
+        fetch('/get_data')
+            .then(response => response.json())
+            .then(data => {
+                let mempoolText = data.mempool_data.join("\n");
+                document.getElementById('mempool-messages').value = mempoolText;
+
+                let blockText = data.block_data.join("\n");
+                document.getElementById('block-messages').value = blockText;
+                
+            });
+    }
+        
+    async function fetchMempoolData() {
+        fetch('/get_mempool_data')
+            .then(response => response.json())
+            .then(data => {
+                let mempoolText = data.mempool_data.join("\n");
+                document.getElementById('mempool-messages').value = mempoolText;
+                
+            });
+    }
+
+    async function updateScroll(){
+        var element = document.getElementById("block-messages");
+        element.scrollTop = element.scrollHeight;
+    }
+
+    async function sendMessage() {
+        let rawMessage = document.getElementById('message-input').value;
+        let sanitizedMessage = await sanitizeInput(rawMessage);
+
+        // Check if the token is available
+        if (!token) {
+            alert("Please complete the CAPTCHA.");
+            return;
+        }
+
+        fetch('/send_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'message=' + encodeURIComponent(sanitizedMessage) + '&hcaptcha=' + token,
+        })
+        .then(response => response.json())
+        .then(data => {
+            let statusDiv = document.getElementById('status');
+            if (data.status === 'success') {
+                statusDiv.textContent = data.message;
+                fetchData(); // Refresh data
+                document.getElementById('message-input').value = ''; // Clear input field
+                grecaptcha.reset(); // Reset reCAPTCHA
+                token = ''; // Clear the token after use
+            } else {
+                statusDiv.textContent = 'Error: ' + data.message;
+            }
+        });
+    }
+
+    function onHcaptchaSuccess(recaptchaToken) {
+        token = recaptchaToken; // Store the token
+    }
+
+    // Fetch data every second
+    setInterval(fetchDataCheck, 1000);
+</script>
+
+<!-- Include reCAPTCHA script -->
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
+
+{% endblock %}  
+
+
+{% block content %}
+<div class="container">
+    <h2>FEXT</h2>
+    <textarea id="block-messages" style="height: 35vh;" readonly></textarea>
+</div>
+
+<div class="container">
+    <h2>Mempool</h2>
+    <textarea id="mempool-messages" style="height: 20vh;" readonly></textarea>
+</div>
+
+<div class="container">
+    <label for="message-input"><h2>Message:</h2></label>
+    <div id="status" style="color: #ff00ff; ">FEXT is available.</div>
+    <div style="display: flex; flex-wrap: wrap;">
+        <input class="message-input" type="text" id="message-input" />
+        <!-- hCAPTCHA widget -->
+    <div class="h-captcha" style="padding: 1vh;" data-sitekey="05f80e5a-57de-4996-a66c-608ef73cf762" data-callback="onHcaptchaSuccess"></div>
+        <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+    
+    
+</div>
+{% endblock %}

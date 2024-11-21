@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Ferritecoin Web Wallet{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/styles.css">
+{% endblock %}  
+
+{% block scripts %}
+<!-- Include reCAPTCHA script -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<!-- Operation menu form updater -->
+<script src="../static/js/operation_menu.js"></script>
+<!-- Balance, Register, Withdraw -->    
+<script src="../static/js/basic_wallet_functions.js"></script>
+{% endblock %}         
+
+{% block content %}
+<div class="container">
+    <!-- First Column: Operation Fields (Desktop) -->
+    <div class="column operations-desktop">
+        <h2>Operations</h2>
+        <button class="operation-btn" onclick="selectOperation('balance')">Balance</button>
+        <button class="operation-btn" onclick="selectOperation('register')">Register</button>
+        <button class="operation-btn" onclick="selectOperation('withdraw')">Withdraw</button>
+    </div>
+
+    <!-- First Column: Operation Fields (Mobile) -->
+    <div class="column operations-mobile">
+        <h2>Operations</h2>
+        <button class="toggle-menu" onclick="toggleMenu()">Select Operation</button>
+        <div id="operation-menu">
+            <button class="operation-btn" onclick="selectOperation('balance')">Balance</button>
+            <button class="operation-btn" onclick="selectOperation('register')">Register</button>
+            <button class="operation-btn" onclick="selectOperation('withdraw')">Withdraw</button>
+        </div>
+    </div>
+
+    <!-- Second Column: Input Fields -->
+    <div class="column">
+        <h2 id="input-fields-header" class="hidden">Input Fields</h2>
+        <!-- Input fields for each operation -->
+        <div id="balance-input" class="form-section hidden">
+            <p for="balance-username">Username / Address</p>
+            <input type="text" id="balance-username" placeholder="Search username">
+        </div>
+
+        <div id="register-input" class="form-section hidden">
+            <p for="register-username">Username</p>
+            <input type="text" id="register-username" placeholder="🌐文/Ω!">
+            <p for="register-password">Passphrase</p>
+            <input type="password" id="register-password" placeholder="min 16 chars">
+        </div>
+
+        <div id="withdraw-input" class="form-section hidden">
+            <p for="withdraw-username">Username</p>
+            <input type="text" id="withdraw-username" placeholder="Enter username">
+            <p for="withdraw-password">Password</p>
+            <input type="password" id="withdraw-password" placeholder="Enter password">
+            <p for="withdraw-address">Destination Username / Address</p>
+            <input type="text" id="withdraw-address" placeholder="Enter address">
+            <p for="withdraw-amount">Amount</p>
+            <input type="text" id="withdraw-amount" placeholder="Enter amount">
+        </div>
+
+        <!-- Submit Button -->
+        <button onclick="submitForm()" id="submit-button" class="hidden">Submit</button>
+    </div>
+
+    <!-- Third Column: Output Fields -->
+    <div class="column-wider">
+        <h2 id="output-fields-header" class="hidden">Output Fields</h2>
+        <!-- Balance output fields -->
+        <div id="balance-output" class="output-section hidden">
+            <p>Queried address:</p>
+            <span id="balance-address">-</span>
+            <p>Balance:</p>
+            <span id="balance-value">0.00000000</span>
+
+            <div style="display: flex; justify-content: center; align-items: center; margin: 10px;">
+                <div class="qrcode-placeholder" id="balance-qrcode"><p>QR</p></div>
+            </div>
+
+            <p>Clearing Volume:</p>
+            <span id="balance-pending-value">0.00000000</span>
+            <p>Notes:</p>
+            <span id="balance-notes">-</span>
+        </div>
+
+        <!-- Register output fields -->
+        <div id="register-output" class="output-section hidden">
+            <p>Your wallet address:</p>
+            <span id="register-address">-</span>
+            <p>Balance:</p>
+            <span id="register-value">0.00000000</span>
+
+            <div style="display: flex; justify-content: center; align-items: center; margin: 10px;">
+                <div class="qrcode-placeholder" id="register-qrcode"><p>QR</p></div>
+            </div>
+
+            <p>Pending:</p>
+            <span id="register-pending-value">0.00000000</span>
+            <p>Notes:</p>
+            <span id="register-notes">-</span>
+        </div>
+
+        <!-- Withdraw output fields -->
+        <div id="withdraw-output" class="output-section hidden">
+            <p>Your wallet address:</p>
+            <span id="withdraw-from">-</span>
+            <p>Remaining Balance:</p>
+            <span id="withdraw-bal">0.00000000</span>
+            <p>Amount spent:</p>
+            <span id="withdraw-sent">0.00000000</span>
+            <p>Total fees:</p>
+            <span id="withdraw-fees">0.0000000-</span>
+            <p>Notes:</p>
+            <span id="withdraw-notes">-</span>
+        </div>
+    </div>
+
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="hidden">
+        <div class="modal-content">
+            <p id="modalMessage">Are you sure?</p>
+            <button id="confirmBtn">Yes</button>
+            <button id="cancelBtn">No</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

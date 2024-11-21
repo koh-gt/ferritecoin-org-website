@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Ferrite Ecosystem | ferritecoin.org | FEC{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="../static/css/styles.css">
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        background-color: #000;
+        font-family: Arial, sans-serif;
+    }
+    graphic { 
+        display: block; 
+    }
+    .parallax-layer { position: absolute; top: 0; width: 100%; height: 100%; }
+    .layer1 { background-image: url('image1.jpg'); z-index: 1; }
+    .layer2 { background-image: url('image2.jpg'); z-index: 2; }
+    .layer3 { background-image: url('image3.jpg'); z-index: 3; }
+
+</style>
+{% endblock %}  
+
+{% block scripts %}
+
+{% endblock %}   
+
+{% block content %}
+
+<h1>Ferritecoin</h1>
+<h2 id="subtext">Development in progress</h2>
+{% endblock %}   
